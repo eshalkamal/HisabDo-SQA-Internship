@@ -1,0 +1,2159 @@
+{
+  "info": {
+    "_postman_id": "6158464f-13c5-4569-8fc6-55a8c089a01e",
+    "name": "HisabDo SQA Day 6",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57131141",
+    "_collection_link": "https://go.postman.co/collection/57131141-6158464f-13c5-4569-8fc6-55a8c089a01e?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Registration",
+      "item": [
+        {
+          "name": "TC01 Register - Valid User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.not.have.property(\"accessToken\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "\r",
+                  "    pm.expect(response.data).to.have.property(\"user\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"_id\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"username\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"email\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"testuser15\",\r\n  \"email\": \"testuser15@example.com\",\r\n  \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC02 Register - Missing Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"testuser2\",\r\n  \"email\": \"testuser2@example.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC03 Register - Missing Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Email validation errors are returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is required\");\r",
+                  "    pm.expect(response.errors[1].email).to.eql(\"Email is invalid\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"testuser3\",\r\n  \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC04 Register - Empty Body",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation errors are returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is required\");\r",
+                  "    pm.expect(response.errors[2].username).to.eql(\"Username is required\");\r",
+                  "    pm.expect(response.errors[4].password).to.eql(\"Password is required\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC05 Register - Invalid Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Invalid email validation error is returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is invalid\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testuser5\",\r\n    \"email\": \"invalidemail\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC06 Register - Duplicate Registration",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Duplicate registration message is correct\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"User with email or username already exists\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"testuser1\",\r\n  \"email\": \"testuser1@example.com\",\r\n  \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC07 Register - Long Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Long email validation error is returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is invalid\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testuser7\",\r\n    \"email\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC08 Register - Special Characters",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.not.have.property(\"accessToken\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "\r",
+                  "    pm.expect(response.data).to.have.property(\"user\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"_id\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"username\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"email\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Username is returned correctly\", function () {\r",
+                  "    pm.expect(response.data.user.username).to.exist;\r",
+                  "    pm.expect(response.data.user.username).to.be.a(\"string\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"test11@user#$%\",\r\n    \"email\": \"testuser11@example.com\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC19 Register - Username Min Length",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Username length validation error is returned\", function () {\r",
+                  "    pm.expect(response.errors[0].username)\r",
+                  "        .to.eql(\"Username must be at lease 3 characters long\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Success is false\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"ab\",\r\n    \"email\": \"testuser12@example.com\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC20 Register - Username Max Length",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Username is returned correctly\", function () {\r",
+                  "    pm.expect(response.data.user.username)\r",
+                  "        .to.eql(\"testusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestuser\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Registration is successful\", function () {\r",
+                  "    pm.expect(response.success).to.eql(true);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestuser\",\r\n    \"email\": \"testuser17@example.com\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC21 Register - Password Min Length",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Registration is successful\", function () {\r",
+                  "    pm.expect(response.success).to.eql(true);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User data is returned\", function () {\r",
+                  "    pm.expect(response.data.user).to.have.property(\"email\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"username\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testuser20\",\r\n    \"email\": \"testuser20@example.com\",\r\n    \"password\": \"a\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC22 Register - Password Max Length",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Registration is successful\", function () {\r",
+                  "    pm.expect(response.success).to.eql(true);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User data is returned\", function () {\r",
+                  "    pm.expect(response.data.user).to.have.property(\"email\");\r",
+                  "    pm.expect(response.data.user).to.have.property(\"username\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testuser22\",\r\n    \"email\": \"testuser22@example.com\",\r\n    \"password\": \"Password1234567890Password1234567890Password1234567890Password1234567890\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "TC09 Login - Valid User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Access token is available\", function () {\r",
+                  "    pm.expect(response.data).to.not.be.null;\r",
+                  "    pm.expect(response.data).to.have.property(\"accessToken\");\r",
+                  "    pm.expect(response.data.accessToken).to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User login data exists\", function () {\r",
+                  "    pm.expect(response.data).to.have.property(\"user\");\r",
+                  "    pm.expect(response.data).to.have.property(\"refreshToken\");\r",
+                  "});\r",
+                  "\r",
+                  "if (response.data && response.data.accessToken) {\r",
+                  "    pm.collectionVariables.set(\"accessToken\", response.data.accessToken);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"testuser11@example.com\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC10 Login - Empty Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Password validation error is returned\", function () {\r",
+                  "    pm.expect(response.errors[0].password).to.eql(\"Password is required\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"testuser11@example.com\",\r\n    \"password\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC11 Login - Empty Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Email validation error is returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is invalid\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC12 Login - Invalid Email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Invalid email validation error is returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is invalid\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"invalidemail\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC13 Login - Invalid Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Invalid credentials message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Invalid user credentials\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"testuser1@example.com\",\r\n  \"password\": \"WrongPassword@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC14 Login - Empty Credentials",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Email and password validation errors are returned\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is invalid\");\r",
+                  "    pm.expect(response.errors[1].password).to.eql(\"Password is required\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"\",\r\n    \"password\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC15 Login - SQL Injection",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Request is rejected with validation error\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"' OR '1'='1\",\r\n    \"password\": \"Password@123\"\r\n}"
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC16 Login - XSS Payload",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"XSS payload is rejected\", function () {\r",
+                  "    pm.expect(response.errors[0].email).to.eql(\"Email is invalid\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"<script>alert('XSS')</script>\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/login",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Security / Validation",
+      "item": [
+        {
+          "name": "TC17 Invalid HTTP Method",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"No authentication token is available\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.not.include(\"accessToken\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response body is returned\", function () {\r",
+                  "    pm.expect(pm.response.text()).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC18 Invalid Content-Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Token is not available\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Request is rejected due to invalid content handling\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"testcontent\",\r\n    \"email\": \"testcontent@example.com\",\r\n    \"password\": \"Password@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/register",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "item": [
+        {
+          "name": "TC23 Logout - Valid User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Logout is successful\", function () {\r",
+                  "    pm.expect(response.success).to.eql(true);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Logout message is correct\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"User logged out\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is empty\", function () {\r",
+                  "    pm.expect(response.data).to.be.an(\"object\").that.is.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <accessToken>",
+                "type": "text"
+              },
+              {
+                "key": "",
+                "value": "",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/logout",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC24 Logout - Without Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Logout should fail without token\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is null\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/logout",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC25 Logout - Invalid Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Logout should fail with invalid token\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Invalid token error message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"jwt malformed\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is null\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{bearer_token_0axp}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/logout",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC26 Logout - Expired Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Logout should fail with expired token\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Unauthorized error message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is null\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <expired_access_token>",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/logout",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Email Verification",
+      "item": [
+        {
+          "name": "TC27 Resend Email Verification - Valid User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Email verification resend is successful\", function () {\r",
+                  "    pm.expect(response.success).to.eql(true);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Correct success message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Mail has been sent to your mail ID\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is empty\", function () {\r",
+                  "    pm.expect(response.data).to.be.an(\"object\").that.is.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorizat",
+                "value": "Bearer <accessToken>",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/resend-email-verification",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "resend-email-verification"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Password Management",
+      "item": [
+        {
+          "name": "TC28 Change Password - Valid User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Password changed successfully\", function () {\r",
+                  "    pm.expect(response.success).to.eql(true);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Correct success message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.eql(\"Password changed successfully\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is empty\", function () {\r",
+                  "    pm.expect(response.data).to.be.an(\"object\").that.is.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <accessToken>",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\": \"Password@123\",\r\n    \"newPassword\": \"NewPassword@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/change-password",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC29 Change Password - Wrong Old Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Password change should fail\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message is returned\", function () {\r",
+                  "    pm.expect(response.message).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response data is null\", function () {\r",
+                  "    pm.expect(response.data).to.be.null;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer <accessToken>",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\": \"WrongPassword@123\",\r\n    \"newPassword\": \"NewPassword@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/change-password",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC30 Change Password - Empty Fields",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 422\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time is less than 1000ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Password change should fail\", function () {\r",
+                  "    pm.expect(response.success).to.eql(false);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation errors exist\", function () {\r",
+                  "    pm.expect(response.errors).to.be.an(\"array\").that.is.not.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Required JSON fields exist\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"statusCode\");\r",
+                  "    pm.expect(response).to.have.property(\"data\");\r",
+                  "    pm.expect(response).to.have.property(\"success\");\r",
+                  "    pm.expect(response).to.have.property(\"message\");\r",
+                  "    pm.expect(response).to.have.property(\"errors\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\": \"\",\r\n    \"newPassword\": \"\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.freeapi.app/api/v1/users/change-password",
+              "protocol": "https",
+              "host": [
+                "api",
+                "freeapi",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "bearer_token_0axp",
+      "secret": true
+    }
+  ]
+}
