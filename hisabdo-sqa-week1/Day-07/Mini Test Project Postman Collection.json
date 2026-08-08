@@ -1,0 +1,1324 @@
+{
+  "info": {
+    "_postman_id": "0ed1bee8-8256-4e65-8a17-a83a1dca11b5",
+    "name": "HisabDo SQA Day 7 - Mini Test Project",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57131141",
+    "_collection_link": "https://go.postman.co/collection/57131141-0ed1bee8-8256-4e65-8a17-a83a1dca11b5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "API-TC-01 Get All Products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"API request is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Products data is available\", function () {\r",
+              "    pm.expect(response.data.data).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Product list is not empty\", function () {\r",
+              "    pm.expect(response.data.data.length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Product contains required fields\", function () {\r",
+              "    const product = response.data.data[0];\r",
+              "\r",
+              "    pm.expect(product).to.have.property(\"id\");\r",
+              "    pm.expect(product).to.have.property(\"name\");\r",
+              "    pm.expect(product).to.have.property(\"price\");\r",
+              "    pm.expect(product).to.have.property(\"sku\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.berryfy.org/api/products",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-02 Get Product By ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"API request is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Product data exists\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Product contains required fields\", function () {\r",
+              "    const product = response.data;\r",
+              "\r",
+              "    pm.expect(product).to.have.property(\"id\");\r",
+              "    pm.expect(product).to.have.property(\"name\");\r",
+              "    pm.expect(product).to.have.property(\"price\");\r",
+              "    pm.expect(product).to.have.property(\"sku\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://api.berryfy.org/api/products/8",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "products",
+            "8"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-03 Get Product With Invalid ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"HTTP status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"API request failed for invalid product\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(false);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response statusCode field is 500\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(500);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message exists\", function () {\r",
+              "    pm.expect(response.statusMessage).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error details are provided\", function () {\r",
+              "    pm.expect(response.errors).to.be.an(\"array\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_01lj}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://api.berryfy.org/api/products/9999",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "products",
+            "9999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-04 Get Category By ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"API request is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Category data exists\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Category contains required fields\", function () {\r",
+              "    const category = response.data;\r",
+              "\r",
+              "    pm.expect(category).to.have.property(\"id\");\r",
+              "    pm.expect(category).to.have.property(\"name\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Products list exists\", function () {\r",
+              "    pm.expect(response.data.products).to.be.an(\"array\");\r",
+              "    pm.expect(response.data.products.length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Product contains required fields\", function () {\r",
+              "    const product = response.data.products[0];\r",
+              "\r",
+              "    pm.expect(product).to.have.property(\"id\");\r",
+              "    pm.expect(product).to.have.property(\"name\");\r",
+              "    pm.expect(product).to.have.property(\"price\");\r",
+              "    pm.expect(product).to.have.property(\"sku\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer Token",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://api.berryfy.org/api/categories/1",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "categories",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-05 Register a New User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Registration is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success status code is 201\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success message is provided\", function () {\r",
+              "    pm.expect(response.statusMessage).to.eql(\r",
+              "        \"User registered successfully. Please check your email to confirm your account.\"\r",
+              "    );\r",
+              "});\r",
+              "\r",
+              "pm.test(\"User data exists\", function () {\r",
+              "    pm.expect(response.data.user).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"User contains required fields\", function () {\r",
+              "    pm.expect(response.data.user).to.have.property(\"id\");\r",
+              "    pm.expect(response.data.user).to.have.property(\"userName\");\r",
+              "    pm.expect(response.data.user).to.have.property(\"email\");\r",
+              "    pm.expect(response.data.user).to.have.property(\"roles\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_SECRET_TOKEN",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"userName\": \"testuser00\",\r\n  \"firstName\": \"Test\",\r\n  \"lastName\": \"User\",\r\n  \"email\": \"testuser00@example.com\",\r\n  \"password\": \"Test@12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/register",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-06  Login User with Unconfirmed Email",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 403\", function () {\r",
+              "    pm.response.to.have.status(403);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Login is rejected\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(false);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response status code is 403\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(403);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Email confirmation error message exists\", function () {\r",
+              "    pm.expect(response.statusMessage).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Correct email confirmation message\", function () {\r",
+              "    pm.expect(response.statusMessage).to.include(\"Email not confirmed\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"testuser00@example.com\",\r\n  \"password\": \"Test@12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-07 Login User - Confirmed Email",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Login is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success status code is 200\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Login success message is provided\", function () {\r",
+              "    pm.expect(response.statusMessage).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Authentication data exists\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"User data exists\", function () {\r",
+              "    pm.expect(response.data.user).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Authentication token exists\", function () {\r",
+              "    pm.expect(response.data.token).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Refresh token exists\", function () {\r",
+              "    pm.expect(response.data.refreshToken).to.exist;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"ek.sqa.testing@gmail.com\",\r\n  \"password\": \"Testuser@26\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-08 Login with Invalid Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 401\", function () {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Login is unsuccessful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(false);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error status code is 401\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(401);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message is provided\", function () {\r",
+              "    pm.expect(response.statusMessage).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Correct error message\", function () {\r",
+              "    pm.expect(response.statusMessage).to.eql(\"Invalid email or password\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"email\":\"ek.sqa.testing@gmail.com\",\r\n\"password\":\"WrongPassword123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-09 Login with Unregistered Email",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 401\", function () {\r",
+              "    pm.response.to.have.status(401);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Login is unsuccessful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(false);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error status code is 401\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(401);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Error message is provided\", function () {\r",
+              "    pm.expect(response.statusMessage).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Authentication token is not provided\", function () {\r",
+              "    pm.expect(response.data).to.not.exist;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"nonexistentuser@example.com\",\r\n    \"password\":\"Test@12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-10 Login with Empty Email Field",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validation error response is returned\", function () {\r",
+              "    pm.expect(response.title).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Validation status code is 400\", function () {\r",
+              "    pm.expect(response.status).to.eql(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Email validation errors exist\", function () {\r",
+              "    pm.expect(response.errors.Email).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Email required validation is provided\", function () {\r",
+              "    pm.expect(response.errors.Email).to.include(\"Email is required.\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Invalid email format validation is provided\", function () {\r",
+              "    pm.expect(response.errors.Email).to.include(\"Invalid email format.\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Authentication token is not provided\", function () {\r",
+              "    pm.expect(response.token).to.not.exist;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"\",\r\n    \"password\":\"Test@12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-11 Login with Empty Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validation error response is returned\", function () {\r",
+              "    pm.expect(response.title).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Validation status code is 400\", function () {\r",
+              "    pm.expect(response.status).to.eql(400);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Password validation errors exist\", function () {\r",
+              "    pm.expect(response.errors.Password).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Password required validation is provided\", function () {\r",
+              "    pm.expect(response.errors.Password).to.include(\"Password is required.\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Authentication token is not provided\", function () {\r",
+              "    pm.expect(response.token).to.not.exist;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"ek.sqa.testing@gmail.com\",\r\n    \"password\":\"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-12 Login with Empty Email and Password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Validation errors exist\", function () {\r",
+              "    pm.expect(response.errors).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Email validation error exists\", function () {\r",
+              "    pm.expect(response.errors.Email).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Email required validation is provided\", function () {\r",
+              "    pm.expect(response.errors.Email).to.include(\"Email is required.\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Password validation error exists\", function () {\r",
+              "    pm.expect(response.errors.Password).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Password required validation is provided\", function () {\r",
+              "    pm.expect(response.errors.Password).to.include(\"Password is required.\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Authentication token is not provided\", function () {\r",
+              "    pm.expect(response.token).to.not.exist;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\":\"\",\r\n    \"password\":\"\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/login",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-13 Get User Orders",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Orders retrieval is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success status code is 200\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Orders data exists\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Orders data is an array\", function () {\r",
+              "    pm.expect(response.data).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Order contains required fields\", function () {\r",
+              "    const order = response.data[0];\r",
+              "\r",
+              "    pm.expect(order).to.have.property(\"id\");\r",
+              "    pm.expect(order).to.have.property(\"userId\");\r",
+              "    pm.expect(order).to.have.property(\"status\");\r",
+              "    pm.expect(order).to.have.property(\"total\");\r",
+              "    pm.expect(order).to.have.property(\"orderItems\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_0a2u}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://api.berryfy.org/api/orders/user/10",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "orders",
+            "user",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-14 Get Current Shopping Cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Cart retrieval is successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success status code is 200\", function () {\r",
+              "    pm.expect(response.statusCode).to.eql(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart data exists\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart ID exists\", function () {\r",
+              "    pm.expect(response.data.id).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart items exist\", function () {\r",
+              "    pm.expect(response.data.cartItems).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart totals exist\", function () {\r",
+              "    pm.expect(response.data.subTotal).to.exist;\r",
+              "    pm.expect(response.data.total).to.exist;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_01lj}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://api.berryfy.org/api/shopping-carts/current",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "shopping-carts",
+            "current"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-15 Add Item to Cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Request was successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success message is correct\", function () {\r",
+              "    pm.expect(response.statusMessage).to.eql(\"Item added to cart successfully\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart data exists\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart items are returned\", function () {\r",
+              "    pm.expect(response.data.cartItems).to.be.an(\"array\");\r",
+              "    pm.expect(response.data.cartItems.length).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart item has required fields\", function () {\r",
+              "    const item = response.data.cartItems[0];\r",
+              "\r",
+              "    pm.expect(item.productId).to.exist;\r",
+              "    pm.expect(item.quantity).to.be.above(0);\r",
+              "    pm.expect(item.unitPrice).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Product details are returned\", function () {\r",
+              "    const item = response.data.cartItems[0];\r",
+              "\r",
+              "    pm.expect(item.product).to.exist;\r",
+              "    pm.expect(item.product.name).to.be.a(\"string\").and.not.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart totals are returned\", function () {\r",
+              "    pm.expect(response.data.subTotal).to.be.a(\"number\");\r",
+              "    pm.expect(response.data.taxAmount).to.be.a(\"number\");\r",
+              "    pm.expect(response.data.total).to.be.a(\"number\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_01lj}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"cartId\": 15414,\r\n  \"productId\": 10,\r\n  \"userId\": 10,\r\n  \"sessionId\": null,\r\n  \"quantity\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/shopping-carts/add-item",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "shopping-carts",
+            "add-item"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-16 Update Cart Item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Request was successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success message is returned\", function () {\r",
+              "    pm.expect(response.statusMessage).to.eql(\"Item quantity updated successfully\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart data is returned\", function () {\r",
+              "    pm.expect(response.data).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart items are returned\", function () {\r",
+              "    pm.expect(response.data.cartItems).to.be.an(\"array\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Updated cart item exists\", function () {\r",
+              "    const item = response.data.cartItems.find(i => i.quantity > 1);\r",
+              "    pm.expect(item).to.exist;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Updated quantity is valid\", function () {\r",
+              "    const item = response.data.cartItems.find(i => i.quantity > 1);\r",
+              "    pm.expect(item.quantity).to.be.a(\"number\");\r",
+              "    pm.expect(item.quantity).to.be.above(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cart totals are returned\", function () {\r",
+              "    pm.expect(response.data.subTotal).to.be.a(\"number\");\r",
+              "    pm.expect(response.data.total).to.be.a(\"number\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_01lj}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"cartId\": 15414,\r\n  \"productId\": 10,\r\n  \"userId\": 10,\r\n  \"sessionId\": null,\r\n  \"quantity\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/shopping-carts/15414/update",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "shopping-carts",
+            "15414",
+            "update"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-17 Delete Cart Item",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Request was successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success message is correct\", function () {\r",
+              "    pm.expect(response.statusMessage).to.eql(\"Item removed from cart successfully\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response data confirms removal\", function () {\r",
+              "    pm.expect(response.data).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains status code\", function () {\r",
+              "    pm.expect(response.statusCode).to.be.a(\"number\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_01lj}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"cartId\": 15414,\r\n  \"productId\": 10,\r\n  \"userId\": 10,\r\n  \"sessionId\": null\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.berryfy.org/api/shopping-carts/15414/remove/10",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "shopping-carts",
+            "15414",
+            "remove",
+            "10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-TC-18 Logout User",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Request was successful\", function () {\r",
+              "    pm.expect(response.isSuccess).to.eql(true);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Success message is correct\", function () {\r",
+              "    pm.expect(response.statusMessage).to.eql(\"Logged out successfully\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains status code\", function () {\r",
+              "    pm.expect(response.statusCode).to.be.a(\"number\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Logout response is valid\", function () {\r",
+              "    pm.expect(response).to.have.property(\"isSuccess\");\r",
+              "    pm.expect(response).to.have.property(\"statusMessage\");\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{json_web_token_01lj}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "https://api.berryfy.org/api/auth/logout",
+          "protocol": "https",
+          "host": [
+            "api",
+            "berryfy",
+            "org"
+          ],
+          "path": [
+            "api",
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_0eo6",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0a2u",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_01lj",
+      "secret": true
+    }
+  ]
+}
