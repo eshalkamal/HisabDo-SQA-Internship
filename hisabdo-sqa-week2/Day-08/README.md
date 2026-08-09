@@ -4,6 +4,11 @@ This repository contains my **Day 8 submission** for the HisabDo SQA Internship 
 
 The objective of this task was to begin the **QA phase of the HisabDo Capstone Project** by exploring the product, identifying major features and preparing the initial testing documentation.
 
+## Project Links
+
+* **Website:** https://hisabdo.app/
+* **Mobile App:** https://play.google.com/store/apps/details?id=com.usman.hisabdo
+
 ## Work Completed
 
 * Explored the HisabDo website.
@@ -11,8 +16,8 @@ The objective of this task was to begin the **QA phase of the HisabDo Capstone P
 * Tested major user flows.
 * Identified the main modules and features.
 * Prepared a Test Plan covering the required testing areas.
-* Created **20 test cases for the Mobile Application**.
-* Created **10 test cases for the Website**.
+* Created 20 test cases for the Mobile Application.
+* Created 10 test cases for the Website.
 
 ## Testing Areas
 
